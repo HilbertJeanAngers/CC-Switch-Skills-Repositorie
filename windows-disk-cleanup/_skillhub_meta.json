@@ -1,0 +1,11 @@
+{
+  "name": "C 盘清理 · 三档分级",
+  "installedAt": 1795224917302,
+  "source": "marketplace",
+  "version": "1.0.0",
+  "skillId": "skill_2117450500704292864",
+  "pay_mode": 0,
+  "description_zh": "扫描 Windows 磁盘（通常是 C 盘）找出可删除文件，按 A/B/C 三档风险分级产出清理清单。适用于磁盘空间不足、想知道哪些文件能删、或要求“先出清单不动文件”的场景。覆盖只读扫描、风险分级与安全删除执行。",
+  "description_en": "Scan a Windows drive (typically C:) for deletable files and produce a risk-tiered cleanup report. Use this skill when the disk is running out of space, the user asks which files can be deleted, or asks for a list-only scan that must not touch any file. It covers read-only scanning, three-tier risk classification (safe to delete / needs confirmation / never delete manually), and deletion that only runs after explicit user confirmation.",
+  "iconSource": "letter:auto"
+}
