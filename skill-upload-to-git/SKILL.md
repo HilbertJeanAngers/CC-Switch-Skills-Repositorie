@@ -1,5 +1,5 @@
 ---
-name: skill上传git仓库
+name: skill-upload-to-git
 description: 把 skill 库复刻/同步到目标文件夹，提交并推送到对应 git 仓库。用于用户说"同步 skill 到仓库""把 skill 上传 git""复刻 skill 库""更新 skill 仓库""skill上传git仓库"等场景。默认源为 CC Switch 的 skill 库，默认目标为 D:\My_Program\Ai Work_Space\My Skills。
 ---
 
