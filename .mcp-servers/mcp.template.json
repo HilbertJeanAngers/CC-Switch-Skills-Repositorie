@@ -1,0 +1,279 @@
+{
+  "_meta": {
+    "description": "MCP 配置真相模板。密钥一律为 ${VAR} 占位符，禁止填写真实值。",
+    "sync": "python sync_mcp_template.py export|apply",
+    "exported_at": "2026-11-23T13:50:52+08:00",
+    "cc_switch_role": "切换器：保留各 agent 启用开关；配置内容以本模板为准"
+  },
+  "required_env": {
+    "CONTEXT7_API_KEY": "Context7 API key（ctx7sk-...），从 context7.com/dashboard 获取",
+    "NOTION_TOKEN": "Notion integration token，本机通过用户环境变量提供（不写进 mcp.json）",
+    "MYSQL_WTTG_HOST": "mysql-wttg / mcpServers-mysql 的数据库主机",
+    "MYSQL_WTTG_PORT": "mysql-wttg / mcpServers-mysql 的端口",
+    "MYSQL_WTTG_USER": "mysql-wttg / mcpServers-mysql 的用户",
+    "MYSQL_WTTG_PASSWORD": "mysql-wttg / mcpServers-mysql 的密码",
+    "MYSQL_WTTG_DATABASE": "mysql-wttg / mcpServers-mysql 的库名",
+    "MYSQL_HDGT_HOST": "mysql-hdgt 的数据库主机",
+    "MYSQL_HDGT_PORT": "mysql-hdgt 的端口",
+    "MYSQL_HDGT_USER": "mysql-hdgt 的用户",
+    "MYSQL_HDGT_PASSWORD": "mysql-hdgt 的密码",
+    "MYSQL_HDGT_DATABASE": "mysql-hdgt 的库名",
+    "MYSQL_ZHGT_HOST": "mysql-zhgt 的数据库主机",
+    "MYSQL_ZHGT_PORT": "mysql-zhgt 的端口",
+    "MYSQL_ZHGT_USER": "mysql-zhgt 的用户",
+    "MYSQL_ZHGT_PASSWORD": "mysql-zhgt 的密码",
+    "MYSQL_ZHGT_DATABASE": "mysql-zhgt 的库名",
+    "USERPROFILE": "Windows 用户目录，通常系统已提供；apply 时自动取 Path.home()"
+  },
+  "mcp_servers": {
+    "mysql-zhgt": {
+      "config": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@pickstar-2002/mysql-mcp"
+        ],
+        "env": {
+          "MYSQL_HOST": "${MYSQL_ZHGT_HOST}",
+          "MYSQL_PORT": "${MYSQL_ZHGT_PORT}",
+          "MYSQL_USER": "${MYSQL_ZHGT_USER}",
+          "MYSQL_PASSWORD": "${MYSQL_ZHGT_PASSWORD}",
+          "MYSQL_DATABASE": "${MYSQL_ZHGT_DATABASE}"
+        }
+      },
+      "enabled": {
+        "claude": true,
+        "codex": false,
+        "gemini": false,
+        "grokbuild": false,
+        "opencode": false,
+        "hermes": false,
+        "mcode": false,
+        "pi": false,
+        "agy": false,
+        "kimi": false,
+        "omp": false,
+        "dsh": false,
+        "copilot": false,
+        "workbuddy": false
+      },
+      "description": null,
+      "managed_by": "user"
+    },
+    "mcpServers-mysql": {
+      "config": {
+        "command": "uvx",
+        "args": [
+          "--from",
+          "mysql-mcp-server",
+          "mysql_mcp_server"
+        ],
+        "env": {
+          "MYSQL_HOST": "${MYSQL_WTTG_HOST}",
+          "MYSQL_PORT": "${MYSQL_WTTG_PORT}",
+          "MYSQL_USER": "${MYSQL_WTTG_USER}",
+          "MYSQL_PASSWORD": "${MYSQL_WTTG_PASSWORD}",
+          "MYSQL_DATABASE": "${MYSQL_WTTG_DATABASE}"
+        }
+      },
+      "enabled": {
+        "claude": true,
+        "codex": false,
+        "gemini": false,
+        "grokbuild": false,
+        "opencode": false,
+        "hermes": false,
+        "mcode": false,
+        "pi": false,
+        "agy": false,
+        "kimi": false,
+        "omp": false,
+        "dsh": false,
+        "copilot": false,
+        "workbuddy": false
+      },
+      "description": null,
+      "managed_by": "user"
+    },
+    "mysql-hdgt": {
+      "config": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@pickstar-2002/mysql-mcp"
+        ],
+        "env": {
+          "MYSQL_HOST": "${MYSQL_HDGT_HOST}",
+          "MYSQL_PORT": "${MYSQL_HDGT_PORT}",
+          "MYSQL_USER": "${MYSQL_HDGT_USER}",
+          "MYSQL_PASSWORD": "${MYSQL_HDGT_PASSWORD}",
+          "MYSQL_DATABASE": "${MYSQL_HDGT_DATABASE}"
+        }
+      },
+      "enabled": {
+        "claude": true,
+        "codex": false,
+        "gemini": false,
+        "grokbuild": false,
+        "opencode": false,
+        "hermes": false,
+        "mcode": false,
+        "pi": false,
+        "agy": false,
+        "kimi": false,
+        "omp": false,
+        "dsh": false,
+        "copilot": false,
+        "workbuddy": false
+      },
+      "description": null,
+      "managed_by": "user"
+    },
+    "mysql-wttg": {
+      "config": {
+        "command": "npx",
+        "args": [
+          "-y",
+          "@pickstar-2002/mysql-mcp"
+        ],
+        "env": {
+          "MYSQL_HOST": "${MYSQL_WTTG_HOST}",
+          "MYSQL_PORT": "${MYSQL_WTTG_PORT}",
+          "MYSQL_USER": "${MYSQL_WTTG_USER}",
+          "MYSQL_PASSWORD": "${MYSQL_WTTG_PASSWORD}",
+          "MYSQL_DATABASE": "${MYSQL_WTTG_DATABASE}"
+        }
+      },
+      "enabled": {
+        "claude": true,
+        "codex": false,
+        "gemini": false,
+        "grokbuild": false,
+        "opencode": false,
+        "hermes": false,
+        "mcode": false,
+        "pi": false,
+        "agy": false,
+        "kimi": false,
+        "omp": false,
+        "dsh": false,
+        "copilot": false,
+        "workbuddy": false
+      },
+      "description": null,
+      "managed_by": "user"
+    },
+    "context7": {
+      "config": {
+        "type": "http",
+        "url": "https://mcp.context7.com/mcp",
+        "headers": {
+          "Authorization": "Bearer ${CONTEXT7_API_KEY}"
+        },
+        "enabled": true
+      },
+      "enabled": {
+        "claude": false,
+        "codex": true,
+        "gemini": false,
+        "grokbuild": false,
+        "opencode": false,
+        "hermes": false,
+        "mcode": false,
+        "pi": false,
+        "agy": false,
+        "kimi": false,
+        "omp": false,
+        "dsh": false,
+        "copilot": false,
+        "workbuddy": false
+      },
+      "description": null,
+      "managed_by": "user"
+    },
+    "node_repl": {
+      "config": {
+        "type": "stdio",
+        "command": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.1111.2228.0_x64__2p2nqsd0c76g0\\app\\resources\\cua_node\\bin\\node_repl.exe",
+        "env": {
+          "BROWSER_USE_AVAILABLE_BACKENDS": "chrome,iab,mcpapps",
+          "BROWSER_USE_CODEX_APP_BUILD_FLAVOR": "prod",
+          "BROWSER_USE_CODEX_APP_VERSION": "26.1111.21308",
+          "BROWSER_USE_TINYSKY_ENABLED": "1",
+          "CODEX_CLI_PATH": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.1111.2228.0_x64__2p2nqsd0c76g0\\app\\resources\\codex.exe",
+          "CODEX_HOME": "${USERPROFILE}\\.codex",
+          "NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER": "",
+          "NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME": "",
+          "NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE": "",
+          "NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS": "1000",
+          "NODE_REPL_NODE_MODULE_DIRS": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.1111.2228.0_x64__2p2nqsd0c76g0\\app\\resources\\cua_node\\bin\\node_modules",
+          "NODE_REPL_NODE_PATH": "C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.1111.2228.0_x64__2p2nqsd0c76g0\\app\\resources\\cua_node\\bin\\node.exe",
+          "NODE_REPL_TRUSTED_CODE_PATHS": "${USERPROFILE}\\.codex;C:\\Program Files\\WindowsApps\\OpenAI.Codex_26.1111.2228.0_x64__2p2nqsd0c76g0\\app\\resources\\cua_node\\bin\\node_modules",
+          "NODE_REPL_TRUSTED_SERVICES": "{\"browser\":\"${USERPROFILE}/.codex/plugins/cache/openai-bundled/browser/26.1111.21308/scripts/browser-service.mjs\",\"sky\":\"@oai/sky/service\"}",
+          "NODE_REPL_UNTRUSTED_ENV_ALLOWLIST": "CODEX_WINDOWS_REGISTERED_CORE",
+          "SKY_CUA_NATIVE_PIPE": "1",
+          "SKY_CUA_NATIVE_PIPE_DIRECTORY": "\\\\.\\pipe\\codex-computer-use-ea8ef692-6a89-42a2-b7a5-be223a8cb562"
+        },
+        "env_vars": [
+          "BROWSER_USE_ACCESS_EXECUTOR_ID",
+          "BROWSER_USE_ACCESS_PIPE_PATH",
+          "BROWSER_USE_ACCESS_VERIFYING_IDENTITY",
+          "CODEX_WINDOWS_REGISTERED_CORE"
+        ],
+        "startup_timeout_sec": 120
+      },
+      "enabled": {
+        "claude": false,
+        "codex": true,
+        "gemini": false,
+        "grokbuild": false,
+        "opencode": false,
+        "hermes": false,
+        "mcode": false,
+        "pi": false,
+        "agy": false,
+        "kimi": false,
+        "omp": false,
+        "dsh": false,
+        "copilot": false,
+        "workbuddy": false
+      },
+      "description": null,
+      "managed_by": "agent"
+    },
+    "notion-notes": {
+      "config": {
+        "type": "stdio",
+        "command": "uv",
+        "args": [
+          "run",
+          "--with",
+          "mcp>=2",
+          "--with",
+          "Pillow",
+          "python",
+          "${USERPROFILE}/.mcp-servers/notion-notes/server.py"
+        ],
+        "description": "通用 Notion 笔记工具集：搜索/读取页面、图片补注释、知识库重建、备份恢复"
+      },
+      "enabled": {
+        "claude": false,
+        "codex": false,
+        "gemini": false,
+        "grokbuild": false,
+        "opencode": false,
+        "hermes": false,
+        "mcode": false,
+        "pi": false,
+        "agy": false,
+        "kimi": false,
+        "omp": false,
+        "dsh": false,
+        "copilot": false,
+        "workbuddy": true
+      },
+      "description": "通用 Notion 笔记工具集：搜索/读取页面、图片补注释、知识库重建、备份恢复",
+      "managed_by": "user"
+    }
+  }
+}
