@@ -4,7 +4,14 @@
 
 用法:
   python sync_skills.py --source <源目录> --target <目标目录> [--dry-run] [--keep-target]
-                        [--mcp-source <MCP源目录>] [--no-mcp]
+                        [--mcp-source <MCP源目录>] [--mcp-target <MCP目标目录>] [--no-mcp]
+
+新流程（git 目标库为真相源，反向分发到 CC Switch）示例:
+  python sync_skills.py \
+    --source "D:/My_Program/Ai Work_Space/My Skills" \
+    --target "C:/Users/123456/.cc-switch/skills" \
+    --mcp-source "D:/My_Program/Ai Work_Space/My Skills/.mcp-servers" \
+    --mcp-target "C:/Users/123456/.mcp-servers"
 
 默认规则（在目标基础上用新版改写）:
   - 目标缺失的目录：从源整体复制
@@ -14,8 +21,8 @@
   - 加 --keep-target 可恢复旧行为：同名时保留目标版本，不覆盖。
 
 MCP 同步（默认开启）:
-  - 源默认 C:/Users/123456/.mcp-servers，目标 <target>/.mcp-servers
-  - --mcp-source 覆盖源路径；--no-mcp 关闭 MCP 同步
+  - 源默认 C:/Users/123456/.mcp-servers，目标默认 <target>/.mcp-servers
+  - --mcp-source 覆盖源路径；--mcp-target 覆盖目标路径；--no-mcp 关闭 MCP 同步
   - 用点开头的 .mcp-servers 作目录名，避免被当成 skill 同步
   - 忽略 __pycache__ 与 *.pyc
 """
@@ -134,6 +141,8 @@ def main():
                     help="同名内容不同时保留目标版本（默认用源逐文件覆盖）")
     ap.add_argument("--mcp-source", default=DEFAULT_MCP_SOURCE,
                     help=f"MCP 服务端源目录（默认 {DEFAULT_MCP_SOURCE}）")
+    ap.add_argument("--mcp-target", default=None,
+                    help="MCP 服务端目标目录（默认 <target>/.mcp-servers；反向分发时传本地运行位置）")
     ap.add_argument("--no-mcp", action="store_true", help="关闭 MCP 同步（默认开启）")
     args = ap.parse_args()
 
@@ -148,7 +157,7 @@ def main():
 
     if not args.no_mcp:
         mcp_src = Path(args.mcp_source)
-        mcp_dst = dst_root / MCP_DIRNAME
+        mcp_dst = Path(args.mcp_target) if args.mcp_target else dst_root / MCP_DIRNAME
         print(f"\nmcp:   {mcp_src}  ->  {mcp_dst}")
         sync_group("mcp", mcp_src, mcp_dst, args)
 
