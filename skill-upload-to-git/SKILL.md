@@ -5,7 +5,7 @@ description: 把 skill 库复刻/同步到目标文件夹，提交并推送到�
 
 # Skill 上传 Git 仓库
 
-把源 skill 库复刻到目标文件夹，提交并推送到对应 git 仓库。核心是**先对比、再复刻、推送后查远端真实指针**，且能保护目标里的增强版 skill 不被源覆盖。
+把源 skill 库复刻到目标文件夹，提交并推送到对应 git 仓库。核心是**先对比、再复刻、推送后查远端真实指针**，**同名 skill 用源（新版）逐文件覆盖目标的同名文件，目标独有的脚本/参考文档保留**。
 
 ## 默认路径
 
@@ -28,12 +28,14 @@ description: 把 skill 库复刻/同步到目标文件夹，提交并推送到�
 ### 2. 复刻/同步（先 dry-run）
 
 ```bash
-python "C:/Users/123456/.workbuddy/skills/skill上传git仓库/scripts/sync_skills.py" --source "<源>" --target "<目标>" --dry-run
+python "C:/Users/123456/.workbuddy/skills/skill-upload-to-git/scripts/sync_skills.py" --source "<源>" --target "<目标>" --dry-run
 ```
 
-脚本会列出三类差异：**目标缺失**（将复制）、**目标独有**（保留）、**同名但内容不同**（需判断）。
+脚本会列出三类差异：**目标缺失**（将复制）、**目标独有**（保留）、**同名但内容不同**（逐文件覆盖同名）。
 
-**关键判断**：同名但内容不同时，先看是不是目标做了增强（多了 `scripts/`、`references/` 等目录）。是则保留目标版本，不要用源覆盖——例如 `notion-course-notes` 在目标里带完整脚本，比 CC Switch 源库的空壳版强。确认无误后再去掉 `--dry-run` 执行复制；只有明确要用源覆盖时才加 `--force`。
+**默认规则**（在目标基础上用新版改写）：同名但内容不同时，把源的文件**逐个覆盖到目标的同名文件**，而目标里独有的 `scripts/`、`references/` 等文件/目录**全部保留、不删除**。例如 `notion-course-notes` 会用源的新版 `SKILL.md` 覆盖目标的旧版，但目标自带的脚本和参考文档不受影响。这是默认行为，不需额外参数。确认 dry-run 结果无误后去掉 `--dry-run` 执行。
+
+**仅当明确想保留目标旧版文件时**才加 `--keep-target`（旧行为：同名保留目标、不覆盖）。
 
 ### 3. 提交与推送
 
