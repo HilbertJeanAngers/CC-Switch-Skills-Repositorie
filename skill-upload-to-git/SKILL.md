@@ -13,9 +13,13 @@ description: 把 skill 库复刻/同步到目标文件夹，提交并推送到�
 |---|---|
 | 源（CC Switch skill 库） | `C:/Users/123456/.cc-switch/skills/` |
 | 目标文件夹 | `D:/My_Program/Ai Work_Space/My Skills/` |
+| MCP 源（默认开启同步） | `C:/Users/123456/.mcp-servers/` |
+| MCP 目标 | `<目标>/.mcp-servers/`（点开头，避免被当成 skill） |
 | 目标 git 仓库 | 读目标文件夹的 `git remote -v`（当前 `HilbertJeanAngers/CC-Switch-Skills-Repositorie`） |
 
 用户可覆盖源/目标。CC Switch 登记的 skill 仓库列表在 `C:/Users/123456/.cc-switch/cc-switch.db` 的 `skill_repos` 表（含 owner/name/branch/host）。
+
+脚本一次跑两组同步：**skill 组**（源 skill 库 → 目标根目录）和 **mcp 组**（MCP 源 → `<目标>/.mcp-servers/`）。两组用同一套「缺失复制 / 独有保留 / 同名逐文件覆盖」规则，MCP 组额外忽略 `__pycache__` 和 `*.pyc`。`--no-mcp` 可关闭 MCP 组，`--mcp-source` 可改 MCP 源路径。
 
 ## 流程
 
@@ -41,11 +45,13 @@ python "C:/Users/123456/.workbuddy/skills/skill-upload-to-git/scripts/sync_skill
 
 ```bash
 cd "<目标>"
-git add -A
-git status --short              # 确认改动符合预期，再提交
+git add -- <只列出本次实际改动的文件/目录>   # 不用 git add -A
+git diff --cached --name-only   # 确认暂存区只有本次改动
 git commit -m "<描述本次改动的 message>"
 git push origin <branch>        # branch 一般是 main
 ```
+
+**精准提交**：只暂存本次真正改过的 skill / MCP 文件，不要用 `git add -A` 把无关改动一起塞进去。改哪个 skill 就只动哪个。
 
 ### 4. 验证（必做）
 
